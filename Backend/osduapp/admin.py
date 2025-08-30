@@ -1,0 +1,13 @@
+from django.contrib import admin
+
+# Register your models here.
+from .models import well
+
+from .models import shoretype
+from .models import NIOC_Production_type
+from .models import NIOC_Production
+ 
+admin.site.register(well)
+admin.site.register(shoretype)
+admin.site.register(NIOC_Production_type)
+admin.site.register(NIOC_Production)

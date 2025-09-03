@@ -2,7 +2,8 @@ from django.shortcuts import render
 import json
 from django.http import HttpResponse,JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .models import Tempwell,NIOC_Production
+# from .models import Tempwell,NIOC_Production
+from .models import POOL_TYPE
 from .serializers import wellSerializer
 from django.core.exceptions import ObjectDoesNotExist
  
@@ -37,8 +38,10 @@ def wellreport1(request):
 
 def getallwell(respone):
            if respone.method == 'GET':
-            items = list(Tempwell.objects.all().values('id', 'wellname', 'componyname','amount'))
+            items = list(POOL_TYPE.objects.all())
             return JsonResponse(items, safe=False) 
+
+
 
 @csrf_exempt
 def create_well(respone):
@@ -93,3 +96,12 @@ def getProduction(respons):
      return JsonResponse({{'error': 'empty'}}, safe=False) 
 
  
+
+ # //////////////       POOL View.       //////////////////
+
+def GetPooType(respone):
+   if respone.method == 'GET':
+            items = list(POOL_TYPE.objects.all().values())
+           
+            return JsonResponse(items, safe=False)
+         

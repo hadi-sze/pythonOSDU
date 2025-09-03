@@ -1,9 +1,9 @@
 from rest_framework import serializers
-from .models import well
+from .models import WELL
 
 class wellSerializer(serializers.ModelSerializer):
     class Meta:
-        model = well
-        fields = ['id', 'wellname', 'componyname', 'amount']
+        model = WELL
+        fields = ['WELL_ID', 'WELL_NAME', 'WELL_ALIAS_NAME']
 
  

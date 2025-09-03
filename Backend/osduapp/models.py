@@ -582,4 +582,14 @@ class POOL(models.Model):
     ROW_CHANEGED_BY= models.CharField(max_length=200,blank=True, null=True)
     IS_ACTIVE=models.BooleanField(default=True)
 
-    
+ ## ##################### ##
+    ##. class zone 
+    ## ZONE: The ZONE table contains the name of a zone described in a field or reservoir. A zone may be a regular or irregular belt,
+    #  layer, band, or strip of earth materials disposed horizontally, vertically, concentrically or otherwise, and characterized as 
+    # distinct from surrounding parts by some particular property or content.
+    ## #################### ##
+class ZONE(models.Model):
+    ZONE_ID = models.BigAutoField(primary_key=True)
+    zone_name = models.CharField(max_length=200,blank=True, null=True)
+    POOL_ID = models.ForeignKey(POOL,on_delete=models.CASCADE)
+    IS_ACTIVE=models.BooleanField(default=True)

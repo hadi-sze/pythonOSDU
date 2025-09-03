@@ -102,6 +102,7 @@ def getProduction(respons):
 def GetPooType(respone):
    if respone.method == 'GET':
             items = list(POOL_TYPE.objects.all().values())
-           
+            itemss = list(POOL_TYPE.objects.filter(POOL_TYPE_ID = 1).values())
+
             return JsonResponse(items, safe=False)
          

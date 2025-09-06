@@ -3,7 +3,7 @@ import json
 from django.http import HttpResponse,JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 # from .models import Tempwell,NIOC_Production
-from .models import POOL_TYPE
+from .models import POOL_TYPE,R_WELL_STATUS,R_WELL_STATUS_TYPE
 from .serializers import wellSerializer
 from django.core.exceptions import ObjectDoesNotExist
  
@@ -102,7 +102,22 @@ def getProduction(respons):
 def GetPooType(respone):
    if respone.method == 'GET':
             items = list(POOL_TYPE.objects.all().values())
-            itemss = list(POOL_TYPE.objects.filter(POOL_TYPE_ID = 1).values())
-
             return JsonResponse(items, safe=False)
+   
+
+
+
+
+ # //////////////       Well View.       //////////////////
+def GetWELL_STATUS(respone):
+   if respone.method == 'GET':
+            items = list(R_WELL_STATUS.objects.all().values())
+            return JsonResponse(items, safe=False)
+         
+
+def GetWELLSTATUSTYPE(respone):
+        if respone.method == 'GET':
+            items = list(R_WELL_STATUS_TYPE.objects.all().values())
+            return JsonResponse(items, safe=False)
+         
          

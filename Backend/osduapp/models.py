@@ -246,13 +246,10 @@ class R_SOURCE(models.Model):
 class R_WELL_STATUS_TYPE (models.Model):
    R_WELL_STATUS_TYPE_ID =models.BigAutoField(primary_key=True) 
    R_WELL_STATUS_TYPE = models.CharField(max_length=200)
-   R_SOURCE_ID =models.ForeignKey(R_SOURCE,on_delete=models.CASCADE) 
    IS_ACTIVE=models.BooleanField(default=True)
    REMARK =  models.CharField(max_length=200)
-    
    LONG_NAME = models.CharField(max_length=200)
    SHOTR_NAME = models.CharField(max_length=200)
-    
    ROW_CHANGEDCS_DATE = models.DateTimeField()
    ROW_CHANEGED_BY= models.CharField(max_length=200)
    ROW_CREATED_BY= models.CharField(max_length=200)
@@ -592,4 +589,19 @@ class ZONE(models.Model):
     ZONE_ID = models.BigAutoField(primary_key=True)
     zone_name = models.CharField(max_length=200,blank=True, null=True)
     POOL_ID = models.ForeignKey(POOL,on_delete=models.CASCADE)
+    IS_ACTIVE=models.BooleanField(default=True)
+
+
+                
+    
+
+# ##################### ##
+##. Formation zone 
+## FORMATION: Represents a specific layer of reservoir rock through which fluids flow from a reservoir into a string of production tubing. 
+# This table can be used to prorate production from a production string back to individual formations.
+# ## #################### ##
+
+class Formation(models.Model):
+    FORMATION_ID = models.BigAutoField(primary_key=True)
+    FORMATION_NAME =models.CharField(max_length=200,blank=True, null=True)
     IS_ACTIVE=models.BooleanField(default=True)

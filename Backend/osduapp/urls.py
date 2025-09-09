@@ -9,9 +9,10 @@ urlpatterns = [
       path('osdu/add', views.addwell, name='item_list_create'),
       path('osdu/delete',views.delete_byid,name='well_delete'),
       path('osdu/GetProduction',views.getProduction,name='well_delete'),
-      path('osdu/api/gettypepool' , views.GetPooType , name = "Getpooltype"),
+      path('osdu/api/gettypepool' , views.GetPooType , name = "gettypepool"),
        
-      path('osdu/api/getwelltype' , views.GetWELL_STATUS , name = "Getpooltype"),
-      path('osdu/api/getwllstatus' , views.GetWELLSTATUSTYPE , name = "Getpooltype")
+      path('osdu/api/getwelltype' , views.GetWELL_STATUS , name = "getwelltype"),
+      path('osdu/api/getwllstatus' , views.GetWELLSTATUSTYPE , name = "getwllstatus"),
+      path('osdu/api/checkgate' , views.Checklogin , name = "checkgate")
  
 ]

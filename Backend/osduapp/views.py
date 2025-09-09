@@ -1,8 +1,8 @@
 from django.shortcuts import render
+from django.contrib.auth import authenticate, login
 import json
 from django.http import HttpResponse,JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-# from .models import Tempwell,NIOC_Production
 from .models import POOL_TYPE,R_WELL_STATUS,R_WELL_STATUS_TYPE
 from .serializers import wellSerializer
 from django.core.exceptions import ObjectDoesNotExist
@@ -121,3 +121,40 @@ def GetWELLSTATUSTYPE(respone):
             return JsonResponse(items, safe=False)
          
          
+@csrf_exempt
+def Checklogin(respone):
+    pasw = 123456
+    user = 'admin'
+    if respone.method == 'POST':
+        data = json.loads(respone.body)
+        _user = data.get('username')
+        _pass = data.get('password')
+
+        x = type(pasw)
+        y = type(user)
+        o = type(int(_pass))
+        z = type(_user)
+        __pass= int(data.get('password'))
+        if _user == user:
+             return JsonResponse({"status": "success"},status= 200)
+        else : 
+             return JsonResponse({"status": "notfound"},status= 201)
+    
+            
+    return JsonResponse({"status": "error", "message": "Send a POST request with JSON data"}, status=400)
+@csrf_exempt
+def Checklogin1(respone):
+    pasw = 123456
+    user = "admin"
+    if respone.method == 'POST':
+        try:
+             _user=respone.GET.get('username', None)
+             _pass=respone.GET.get('password', None)
+             return JsonResponse({"status": "success"})
+        except json.JSONDecodeError:
+            return JsonResponse({"status": "error", "message": "Invalid JSON"}, status=400)
+        if (user == _user and pasw == _pass ):
+             return JsonResponse({"status": "success", "username": _user, "password": _pass}, status=100)
+        else:
+             return JsonResponse({"status": "Your information is discurrect"}, status=100)
+    return JsonResponse({"status": "error", "message": "Send a POST request with JSON data"}, status=400)

@@ -182,7 +182,7 @@ class FIELD(models.Model):
     FIELD_ABBREVATION = models.CharField(max_length=200)
     X_COORDINATE =models.DecimalField(max_length=10,decimal_places=2,max_digits=10 , blank=True, null=True)
     Y_COORDINATE = models.DecimalField(max_length=10,decimal_places=2,max_digits=10 , blank=True, null=True)
-    CRIS_ID = models.name = models.ForeignKey(CARTOREFERENCESYSTEM, on_delete=models.CASCADE)
+    CRIS_ID =  models.ForeignKey(CARTOREFERENCESYSTEM, on_delete=models.CASCADE )
     CRS_NAME = models.CharField(max_length=200)
     REMARK = models.CharField(max_length=200)
     IS_ACTIVE=models.BooleanField(default=True)
@@ -192,6 +192,7 @@ class FIELD(models.Model):
     ROW_CHANEGED_BY = models.CharField(max_length=200)
     SOURCE_NAME =  models.CharField(max_length=200)
     R_FIELD_TYPE_ID = models.ForeignKey(R_FIELD_TYPE,on_delete=models.CASCADE)
+    FIELD_TYPE_Name = models.CharField(max_length=200, blank=True, null=True)
     
 
 
@@ -321,10 +322,6 @@ class WELL(models.Model):
     DEEPEST_DEPTH = models.FloatField(max_length=5)
     DEPTH_DATUM_ID = models.ForeignKey(R_WELL_DATUM_TYPE,on_delete=models.CASCADE)
     DEPTH_DATUM = models.CharField(max_length=200)
-
-
-
-
 
     DEPTH_DATUM_ELEV = models.DecimalField(max_length=10,decimal_places=5,max_digits=10)
     ROW_CREATED_BY = models.CharField(max_length=200)
@@ -605,3 +602,15 @@ class Formation(models.Model):
     FORMATION_ID = models.BigAutoField(primary_key=True)
     FORMATION_NAME =models.CharField(max_length=200,blank=True, null=True)
     IS_ACTIVE=models.BooleanField(default=True)
+
+# ##################### ##
+##. Field 
+## FIELD: A geographical area defined for administrative and legal purposes.
+#  The field name refers to the surface area,
+# although at times it may refer to both the surface and the underground productive zones.
+#  In the United States a field is often an area consisting of a single reservoir or multiple reservoirs 
+# all grouped on, or related to, t
+# he same individual geological structural feature and/or stratigraphic condition.
+#  Fields are usually defined at a province/state level but possibly are done at the district level.
+# ## #################### ##
+ 

@@ -1,12 +1,15 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 import json
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponse,JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import POOL_TYPE,R_WELL_STATUS,R_WELL_STATUS_TYPE
-from .serializers import wellSerializer
+from .models import *
+from .serializers import *
 from django.core.exceptions import ObjectDoesNotExist
- 
+import datetime
+from django.contrib import messages
 Well={
     'name':"Wall1",
     'soild':10,
@@ -158,3 +161,105 @@ def Checklogin1(respone):
         else:
              return JsonResponse({"status": "Your information is discurrect"}, status=100)
     return JsonResponse({"status": "error", "message": "Send a POST request with JSON data"}, status=400)
+
+#///////////// Field //////////////
+
+@csrf_exempt
+def DeleteField(respone):
+     if respone.method == "DELETE": 
+      
+      _data = json.loads(respone.body)
+      _int_id = _data.get("FIELD_id")
+       
+      _getwell=FIELD.objects.get(FIELD_ID=_int_id)
+      _getwell.delete()
+     
+
+def GetField(respone):
+     if respone.method == "GET": 
+        items = list(FIELD.objects.all().values())         
+        return JsonResponse(items, safe=False) 
+
+@csrf_exempt
+def editField(respone):
+    _data = json.loads(respone.body)
+    pk  = _data.get('pk')
+    note = get_object_or_404(FIELD, pk=pk)
+    return JsonResponse(respone, 'notes/note_detail.html', {'note': note})
+    
+     
+     
+@csrf_exempt
+def AddField(respone):
+     if respone.method == "POST":
+        _data = json.loads(respone.body)
+        _FIELD_name  = _data.get('FIELD_name')
+        _FIELD_ABBREVATION = _data.get('ABRVField')
+        _X_COORDINATE = _data.get('X_COORDINATE')
+        _Y_COORDINATE = _data.get ('Y_COORDINATE')
+        _IS_ACTIVE = _data.get('IS_ACTIVE')
+        _CRIS_ID = _data.get('CRIS_ID')
+        _CRS_NAME = CARTOREFERENCESYSTEM.objects.get(CRS_ID = _CRIS_ID).CRS_NAME
+        __CRIS_IDD=CARTOREFERENCESYSTEM.objects.get(CRS_ID = _CRIS_ID)
+        _R_FIELD_TYPE_ID = int(_data.get('FieldType'))
+        _FIELD_TYPE_Name = R_FIELD_TYPE.objects.get(R_FIELD_TYPE_ID = _R_FIELD_TYPE_ID).DISPLAY_NAME
+        _R_FIELD_TYPE_IDD = R_FIELD_TYPE.objects.get(R_FIELD_TYPE_ID = _R_FIELD_TYPE_ID)
+        _ROW_CREATED_DATE=datetime.datetime.now()
+        _ROW_CHANGED_DATE = datetime.datetime.now()
+        _ROW_CHANEGED_BY = "none"
+        _ROW_CREATED_BY = "Admin"
+        _REMARK = 'FieldTest'
+        _SOURCE_NAME  = "d"
+        # serializersz = FieldSS(data=_data)
+        # if serializersz.is_valid():
+        #      serializersz.save()
+        _FieldTemp=FIELD.objects.create(
+                   FIELD_name=_FIELD_name,
+                   FIELD_ABBREVATION=_FIELD_ABBREVATION,
+                   X_COORDINATE = _X_COORDINATE,
+                   Y_COORDINATE =  _Y_COORDINATE,
+                   REMARK=_REMARK,
+                   SOURCE_NAME=_SOURCE_NAME,
+                   IS_ACTIVE =_IS_ACTIVE,
+                   ROW_CREATED_BY =  _ROW_CREATED_BY,
+                   ROW_CREATED_DATE = _ROW_CREATED_DATE,
+                   ROW_CHANGED_DATE = _ROW_CHANGED_DATE,
+                   ROW_CHANEGED_BY = _ROW_CHANEGED_BY,
+                   CRIS_ID = __CRIS_IDD,
+                   R_FIELD_TYPE_ID = _R_FIELD_TYPE_IDD,
+                   FIELD_TYPE_Name=_FIELD_TYPE_Name,
+                   CRS_NAME = _CRS_NAME
+                
+             )
+        
+        _FieldTemp.save()
+        # try:
+        #      _asds =FIELD.objects.create(
+        #            FIELD_name=_FIELD_name,
+        #            FIELD_ABBREVATION=_FIELD_ABBREVATION,
+        #            X_COORDINATE = _X_COORDINATE,
+        #            Y_COORDINATE =  _Y_COORDINATE,
+                 
+        #            CRS_NAME = _CRS_NAME,
+                   
+        #            ROW_CREATED_BY =  _ROW_CREATED_BY,
+        #            ROW_CREATED_DATE = _ROW_CREATED_DATE,
+        #            ROW_CHANGED_DATE = _ROW_CHANGED_DATE,
+        #            ROW_CHANEGED_BY = _ROW_CHANEGED_BY,
+        #            R_FIELD_TYPE_ID = _R_FIELD_TYPE_ID,
+        #            FIELD_TYPE_Name=_FIELD_TYPE_Name,
+        #            REMARK=_REMARK,
+        #            SOURCE_NAME=_SOURCE_NAME,
+        #            IS_ACTIVE =_IS_ACTIVE,
+        #            CRIS_ID =_CRIS_ID,
+                    
+        #      )
+        #      return JsonResponse("save data")
+        # except Exception as e:
+        #     messages.add_message(respone, messages.ERROR, e)
+        return JsonResponse("درح شد")
+             
+         
+
+
+       

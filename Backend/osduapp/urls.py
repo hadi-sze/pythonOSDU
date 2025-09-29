@@ -13,6 +13,11 @@ urlpatterns = [
        
       path('osdu/api/getwelltype' , views.GetWELL_STATUS , name = "getwelltype"),
       path('osdu/api/getwllstatus' , views.GetWELLSTATUSTYPE , name = "getwllstatus"),
-      path('osdu/api/checkgate' , views.Checklogin , name = "checkgate")
+      path('osdu/api/checkgate' , views.Checklogin , name = "checkgate"),
+      path('osdu/api/getfield' ,  views.GetField , name = "GetField"),
+      path('osdu/api/AddField1' ,  views.AddField , name = "AddField"),
+      path('osdu/api/DeleteField' ,  views.DeleteField , name = "DeleteField"),
+       
+ 
  
 ]
